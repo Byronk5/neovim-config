@@ -8,7 +8,8 @@ if use_tokyonight then
     config = function()
       require("tokyonight").setup({
         on_colors = function(colors)
-          colors.bg = "#1a1b26" -- Set your custom background color
+          --colors.bg = "#1a1b26" -- Set your custom background color
+          colors.bg = "none" -- Set your custom background color
           -- Customize other colors here if needed
           -- colors.bg_sidebar = "#1c1d2f" -- Example for sidebar background
         end,
