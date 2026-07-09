@@ -15,6 +15,10 @@ return {
       local cmp = require("cmp")
       require("luasnip.loaders.from_vscode").lazy_load()
 
+      cmp.setup.filetype({ "html", "eruby" }, {
+        keyword_pattern = [[\%(<\?\h\w*\)]],
+      })
+
       cmp.setup({
         snippet = {
           expand = function(args)

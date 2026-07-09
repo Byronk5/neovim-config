@@ -16,7 +16,16 @@ vim.api.nvim_set_keymap("n", "<leader>v", ":vsplit<CR>", { noremap = true, silen
 --Buffer Navigation
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext <CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprevious <CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>d", ":bd <CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>d", function()
+  local cur = vim.api.nvim_get_current_buf()
+  vim.cmd("bprevious")
+  vim.cmd("bdelete " .. cur)
+end, { noremap = true, silent = true, desc = "Close buffer, keep window" })
+vim.api.nvim_set_keymap("n", "<leader>a", ":%bd<CR>", { noremap = true, silent = true })
+
+--Center cursor when navigating with ctrl d/u
+vim.api.nvim_set_keymap("n", "<C-d>", "<C-d>zz", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-u>", "<C-u>zz", { noremap = true, silent = true })
 
 --Automatically close brackets, parethesis, and quotes
 vim.api.nvim_set_keymap("i", "'", "''<left>", { noremap = true, silent = true })
