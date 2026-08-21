@@ -16,7 +16,9 @@ vim.api.nvim_set_keymap("n", "<leader>v", ":vsplit<CR>", { noremap = true, silen
 --Buffer Navigation
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext <CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprevious <CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>d", ":bd <CR>", { noremap = true, silent = true })
+-- <leader>d lives in lua/plugins/neo-tree.lua so buffer deletes don't resize the tree
+
+vim.api.nvim_set_keymap("n", "<leader>a", ":%bd <CR>", { noremap = true, silent = true })
 
 --Automatically close brackets, parethesis, and quotes
 vim.api.nvim_set_keymap("i", "'", "''<left>", { noremap = true, silent = true })
@@ -38,31 +40,31 @@ vim.api.nvim_set_keymap("v", "<leader>/", ":lua ToggleJSXCommentVisual()<CR>", {
 
 -- Function to toggle JSX comment on a single line
 function ToggleJSXComment()
-  local line = vim.api.nvim_get_current_line()
-  if line:match("^%s*{%/%*") then
-    -- Remove JSX comment
-    line = line:gsub("{/%*%s?", "", 1):gsub("%s?%*/}", "", 1)
-  else
-    -- Add JSX comment
-    line = line:gsub("^%s*", "%0{/* ") .. " */}"
-  end
-  vim.api.nvim_set_current_line(line)
+	local line = vim.api.nvim_get_current_line()
+	if line:match("^%s*{%/%*") then
+		-- Remove JSX comment
+		line = line:gsub("{/%*%s?", "", 1):gsub("%s?%*/}", "", 1)
+	else
+		-- Add JSX comment
+		line = line:gsub("^%s*", "%0{/* ") .. " */}"
+	end
+	vim.api.nvim_set_current_line(line)
 end
 
 -- Function to toggle JSX comments in visual mode
 function ToggleJSXCommentVisual()
-  local start_line = vim.fn.line("'<")
-  local end_line = vim.fn.line("'>")
+	local start_line = vim.fn.line("'<")
+	local end_line = vim.fn.line("'>")
 
-  for i = start_line, end_line do
-    local line = vim.fn.getline(i)
-    if line:match("^%s*{%/%*") then
-      -- Remove JSX comment
-      line = line:gsub("{/%*%s?", "", 1):gsub("%s?%*/}", "", 1)
-    else
-      -- Add JSX comment
-      line = line:gsub("^%s*", "%0{/* ") .. " */}"
-    end
-    vim.fn.setline(i, line)
-  end
+	for i = start_line, end_line do
+		local line = vim.fn.getline(i)
+		if line:match("^%s*{%/%*") then
+			-- Remove JSX comment
+			line = line:gsub("{/%*%s?", "", 1):gsub("%s?%*/}", "", 1)
+		else
+			-- Add JSX comment
+			line = line:gsub("^%s*", "%0{/* ") .. " */}"
+		end
+		vim.fn.setline(i, line)
+	end
 end
